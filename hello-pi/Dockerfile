@@ -1,6 +1,9 @@
 FROM arm32v7/node:8.9
-RUN mkdir -p /usr/src/app
-COPY index.js /usr/src/app
-COPY package.json /usr/src/app
+COPY index.js ./
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm i
 EXPOSE 8000
-CMD [ "node", "/usr/src/app/index" ]
+ENV REDIS_HOST="127.0.0.1" \
+    REDIS_PORT=6379
+ENTRYPOINT [ "npm", "start" ]
